@@ -8,25 +8,19 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            min-height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            padding: 20px; 
+            background: #f8f9fa;
+            min-height: 100vh;
         }
         .phone-container { 
-            width: 375px; 
-            min-height: 812px; 
-            background: white; 
-            border-radius: 25px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
-            overflow: hidden; 
-            position: relative; 
+            width: 100%;
+            min-height: 100vh;
+            background: white;
+            position: relative;
         }
         .main-container { 
             display: flex; 
             flex-direction: column; 
+            min-height: 100vh;
         }
         .header { 
             background: linear-gradient(135deg, #2196F3, #1976D2); 
@@ -101,9 +95,8 @@
             text-decoration: none;
             color: inherit;
         }
-        .feature-item:hover { 
+        .feature-item:active { 
             background: #f8f9fa; 
-            transform: translateX(5px); 
         }
         .feature-item:last-child { 
             border-bottom: none; 
@@ -137,6 +130,27 @@
         .arrow { 
             color: #ccc; 
             font-size: 18px; 
+        }
+
+        /* 데스크톱에서 미리보기용 (선택사항) */
+        @media (min-width: 768px) {
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            .phone-container {
+                width: 375px;
+                min-height: 812px;
+                border-radius: 25px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                overflow: hidden;
+            }
+            .main-container {
+                min-height: 812px;
+            }
         }
     </style>
 </head>
