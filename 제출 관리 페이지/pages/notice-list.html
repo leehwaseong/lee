@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeWork - 공지사항</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
+        }
+        .phone-container { 
+            width: 375px; 
+            height: 812px; 
+            background: white; 
+            border-radius: 25px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+            overflow: hidden; 
+            position: relative; 
+        }
+        .status-bar { 
+            background: #000; 
+            color: white; 
+            padding: 8px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 14px; 
+            font-weight: 600; 
+        }
+        .main-container { 
+            height: calc(100% - 40px); 
+            display: flex; 
+            flex-direction: column; 
+        }
+        .header { 
+            background: linear-gradient(135deg, #4CAF50, #388E3C); 
+            color: white; 
+            padding: 15px 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+        }
+        .back-btn {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            padding: 5px;
+        }
+        .header-title {
+            flex: 1;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .search-container {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 20px;
+            padding: 10px 15px;
+            gap: 10px;
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 15px;
+        }
+        .search-icon { color: #999; }
+        .content { 
+            flex: 1; 
+            background: #f8f9fa; 
+            overflow-y: auto; 
+        }
+        .notice-item {
+            background: white;
+            margin: 10px 15px;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .notice-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .notice-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .notice-badge {
+            color: white;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .notice-badge.council { background: #9C27B0; }
+        .notice-badge.newsletter { background: #FF9800; }
+        .notice-badge.notice { background: #4CAF50; }
+        .notice-badge.etc { background: #757575; }
+        .notice-title {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.4;
+        }
+        .notice-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            color: #999;
+            margin-top: 8px;
+        }
+        .attachment-icon { color: #4CAF50; }
+        .new-indicator {
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+        }
+        .filter-tabs {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 15px;
+            overflow-x: auto;
+        }
+        .filter-tab {
+            flex: 1;
+            min-width: 60px;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #999;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .filter-tab.active {
+            color: #4CAF50;
+            border-bottom-color: #4CAF50;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .fab {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+            color: white;
+            border-radius: 50%;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+            transition: all 0.3s ease;
+        }
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.5);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 335px;
+            border-radius: 20px;
+            overflow: hidden;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-header {
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+        .detail-section { margin-bottom: 20px; }
+        .detail-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        .detail-value {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .attachment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .attachment-item:hover { background: #e0e0e0; }
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 15px 0;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .file-upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #999;
+        }
+        .file-upload-area:hover {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.05);
+            color: #4CAF50;
+        }
+        .file-list { margin-top: 10px; }
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .file-remove {
+            background: none;
+            border: none;
+            color: #ff4444;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0 5px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        .btn-cancel, .btn-submit {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+        .btn-cancel:hover { background: #e0e0e0; }
+        .btn-submit {
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+            color: white;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            z-index: 2000;
+            display: none;
+        }
+        .success-message.show {
+            display: block;
+            animation: popIn 0.3s ease;
+        }
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        .delete-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .delete-btn:hover {
+            background: #e63939;
+            transform: scale(1.05);
+        }
+        .password-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 3000;
+            display: none;
+            text-align: center;
+        }
+        .password-modal.show { display: block; }
+        .password-input {
+            width: 200px;
+            padding: 12px;
+            margin: 15px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+            letter-spacing: 5px;
+        }
+        .password-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        .password-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .password-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .password-cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+        .password-confirm {
+            background: #ff4444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="status-bar">
+            <span>9:41</span>
+            <span>🔋100%</span>
+        </div>
+        
+        <div class="main-container">
+            <div class="header">
+                <button class="back-btn" id="backBtn">‹</button>
+                <div class="header-title">📢 공지사항</div>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="공지사항 검색...">
+                </div>
+            </div>
+
+            <div class="filter-tabs">
+                <div class="filter-tab active" data-filter="all">전체</div>
+                <div class="filter-tab" data-filter="council">협의체</div>
+                <div class="filter-tab" data-filter="newsletter">소식지</div>
+                <div class="filter-tab" data-filter="notice">공지</div>
+                <div class="filter-tab" data-filter="etc">기타</div>
+            </div>
+            
+            <div class="content" id="noticeList"></div>
+
+            <button class="fab" id="fabBtn">✏️</button>
+        </div>
+    </div>
+
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">공지사항 상세</div>
+                <button class="modal-close" id="detailCloseBtn">×</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="writeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">공지사항 작성</div>
+                <button class="modal-close" id="writeCloseBtn">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="noticeForm">
+                    <div class="form-group">
+                        <label class="form-label">구분 *</label>
+                        <select id="noticeType" class="form-input" required>
+                            <option value="council">협의체</option>
+                            <option value="newsletter">소식지</option>
+                            <option value="notice">공지</option>
+                            <option value="etc">기타</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">제목 *</label>
+                        <input type="text" id="noticeTitle" class="form-input" placeholder="제목을 입력하세요" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">작성자 *</label>
+                        <input type="text" id="noticeAuthor" class="form-input" placeholder="작성자명" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">내용 *</label>
+                        <textarea id="noticeContent" class="form-textarea" placeholder="내용을 입력하세요" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">첨부파일</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <span>📎 파일 선택</span>
+                        </div>
+                        <input type="file" id="fileInput" style="display: none;" multiple>
+                        <div id="fileList" class="file-list"></div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" id="cancelBtn">취소</button>
+                        <button type="submit" class="btn-submit">등록</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="password-modal" id="passwordModal">
+        <div style="font-size: 20px; font-weight: 600; margin-bottom: 10px;">🔒 비밀번호 입력</div>
+        <div style="font-size: 14px; color: #666; margin-bottom: 20px;">삭제하려면 비밀번호를 입력하세요</div>
+        <input type="password" id="passwordInput" class="password-input" placeholder="****" maxlength="4">
+        <div class="password-buttons">
+            <button class="password-cancel" id="passwordCancelBtn">취소</button>
+            <button class="password-confirm" id="passwordConfirmBtn">확인</button>
+        </div>
+    </div>
+
+    <script>
+        const notices = [
+            {
+                id: 1,
+                type: 'notice',
+                title: '안전모 착용 의무화 강화 안내',
+                content: '2025년 10월 1일부터 현장 내 모든 구역에서 안전모 착용이 의무화됩니다. 미착용 시 즉시 퇴거 조치되오니 반드시 준수해 주시기 바랍니다.\n\n위반 시 처벌:\n1차: 경고\n2차: 3일 출입정지\n3차: 영구 출입금지',
+                author: '안전관리팀',
+                date: '2025-09-28',
+                views: 248,
+                isNew: true,
+                attachments: [
+                    { name: '안전모_착용_기준.pdf', size: '1.2MB' },
+                    { name: '현장_안전수칙.pdf', size: '850KB' }
+                ]
+            },
+            {
+                id: 2,
+                type: 'notice',
+                title: '태풍 대비 안전점검 실시',
+                content: '태풍 카눈 북상에 따라 긴급 안전점검을 실시합니다.\n\n점검 항목:\n- 가설구조물 고정상태\n- 중장비 이동 및 고정\n- 자재 결속 상태\n- 배수로 점검\n\n점검일시: 2025년 9월 29일 14:00\n집합장소: 현장사무소 앞',
+                author: '현장소장',
+                date: '2025-09-27',
+                views: 156,
+                isNew: true,
+                attachments: [
+                    { name: '태풍대비_체크리스트.xlsx', size: '45KB' }
+                ]
+            },
+            {
+                id: 3,
+                type: 'newsletter',
+                title: '10월 안전교육 일정 안내',
+                content: '10월 정기 안전교육 일정을 안내드립니다.\n\n교육 일시:\n- 1차: 10월 5일 (목) 14:00-16:00\n- 2차: 10월 12일 (목) 14:00-16:00\n\n교육 내용:\n- 추락재해 예방\n- 화재 예방 및 대응\n- 응급처치 실습\n\n장소: 현장 교육장\n필수 참석 대상: 전 직원',
+                author: '교육담당',
+                date: '2025-09-25',
+                views: 89,
+                isNew: false,
+                attachments: []
+            },
+            {
+                id: 4,
+                type: 'council',
+                title: 'MSDS 업데이트 완료',
+                content: '화학물질 안전보건자료(MSDS)가 최신 버전으로 업데이트되었습니다.\n\n업데이트 내역:\n- 신규 화학물질 15종 추가\n- 기존 자료 13종 개정\n\nMSDS 메뉴에서 확인하실 수 있습니다.',
+                author: '안전관리팀',
+                date: '2025-09-20',
+                views: 134,
+                isNew: false,
+                attachments: [
+                    { name: '업데이트_목록.pdf', size: '320KB' }
+                ]
+            },
+            {
+                id: 5,
+                type: 'etc',
+                title: '현장 주차장 이용 안내',
+                content: '현장 주차장 구역이 재배치되었습니다.\n\n주차 구역:\n- A구역: 관리자 차량\n- B구역: 협력업체 차량\n- C구역: 방문자 차량\n\n지정된 구역 외 주차 시 견인조치 될 수 있습니다.',
+                author: '총무팀',
+                date: '2025-09-18',
+                views: 201,
+                isNew: false,
+                attachments: []
+            }
+        ];
+
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let selectedFiles = [];
+        let deleteTargetId = null;
+
+        const typeNames = {
+            council: '협의체',
+            newsletter: '소식지',
+            notice: '공지',
+            etc: '기타'
+        };
+
+        function renderNotices() {
+            const container = document.getElementById('noticeList');
+            let filtered = notices.filter(notice => {
+                const matchesFilter = currentFilter === 'all' || notice.type === currentFilter;
+                const matchesSearch = notice.title.toLowerCase().includes(searchTerm) || 
+                                     notice.content.toLowerCase().includes(searchTerm);
+                return matchesFilter && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div>검색 결과가 없습니다</div></div>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(notice => `
+                <div class="notice-item" onclick="showDetail(${notice.id})">
+                    <div class="notice-header">
+                        ${notice.isNew ? '<div class="new-indicator"></div>' : ''}
+                        <span class="notice-badge ${notice.type}">${typeNames[notice.type]}</span>
+                        <div class="notice-title">${notice.title}</div>
+                    </div>
+                    <div class="notice-meta">
+                        <span>👤 ${notice.author}</span>
+                        <span>📅 ${notice.date}</span>
+                        <span>👁️ ${notice.views}</span>
+                        ${notice.attachments.length > 0 ? `<span class="attachment-icon">📎 ${notice.attachments.length}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showDetail(id) {
+            const notice = notices.find(n => n.id === id);
+            if (!notice) return;
+
+            notice.views++;
+            notice.isNew = false;
+            renderNotices();
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <button class="delete-btn" onclick="confirmDelete(${notice.id})">🗑️ 삭제</button>
+                <div class="detail-section">
+                    <div class="detail-label">제목</div>
+                    <div class="detail-value" style="font-weight: 600; font-size: 17px;">${notice.title}</div>
+                </div>
+                <div class="divider"></div>
+                <div class="detail-section">
+                    <div class="detail-label">작성자</div>
+                    <div class="detail-value">${notice.author}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">작성일</div>
+                    <div class="detail-value">${notice.date}</div>
+                </div>
+                <div class="detail-section">
+                    <div class="detail-label">조회수</div>
+                    <div class="detail-value">${notice.views}</div>
+                </div>
+                <div class="divider"></div>
+                <div class="detail-section">
+                    <div class="detail-label">내용</div>
+                    <div class="detail-value" style="white-space: pre-line;">${notice.content}</div>
+                </div>
+                ${notice.attachments.length > 0 ? `
+                    <div class="divider"></div>
+                    <div class="detail-section">
+                        <div class="detail-label">첨부파일 (${notice.attachments.length})</div>
+                        <div class="attachment-list">
+                            ${notice.attachments.map(att => `
+                                <div class="attachment-item" onclick="alert('다운로드: ${att.name}')">
+                                    <span>📄</span>
+                                    <div style="flex: 1;">
+                                        <div style="font-size: 14px; font-weight: 600;">${att.name}</div>
+                                        <div style="font-size: 12px; color: #999;">${att.size}</div>
+                                    </div>
+                                    <span>⬇️</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+
+            document.getElementById('detailModal').classList.add('show');
+        }
+
+        function confirmDelete(id) {
+            deleteTargetId = id;
+            document.getElementById('passwordModal').classList.add('show');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
+        }
+
+        function deleteNotice() {
+            const password = document.getElementById('passwordInput').value;
+            
+            if (password !== '0109') {
+                alert('❌ 비밀번호가 올바르지 않습니다.');
+                document.getElementById('passwordInput').value = '';
+                return;
+            }
+
+            const index = notices.findIndex(n => n.id === deleteTargetId);
+            if (index !== -1) {
+                notices.splice(index, 1);
+                document.getElementById('passwordModal').classList.remove('show');
+                document.getElementById('detailModal').classList.remove('show');
+                renderNotices();
+                
+                const message = document.createElement('div');
+                message.className = 'success-message show';
+                message.innerHTML = `
+                    <div style="font-size: 48px; margin-bottom: 15px;">✅</div>
+                    <div style="font-size: 18px; font-weight: 600; margin-bottom: 10px;">삭제 완료!</div>
+                    <div style="font-size: 14px; color: #666;">게시글이 삭제되었습니다.</div>
+                `;
+                document.body.appendChild(message);
+                
+                setTimeout(() => {
+                    message.remove();
+                }, 2000);
+            }
+        }
+
+        function renderFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = selectedFiles.map((file, index) => `
+                <div class="file-item">
+                    <span>📄 ${file.name} (${formatFileSize(file.size)})</span>
+                    <button type="button" class="file-remove" onclick="removeFile(${index})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            renderFileList();
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + 'B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + 'KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + 'MB';
+        }
+
+        renderNotices();
+
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.history.back();
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchTerm = e.target.value.toLowerCase();
+            renderNotices();
+        });
+
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFilter = tab.dataset.filter;
+                renderNotices();
+            });
+        });
+
+        document.getElementById('fabBtn').addEventListener('click', () => {
+            document.getElementById('writeModal').classList.add('show');
+            document.getElementById('noticeForm').reset();
+            document.getElementById('fileList').innerHTML = '';
+            selectedFiles = [];
+        });
+
+        document.getElementById('detailCloseBtn').addEventListener('click', () => {
+            document.getElementById('detailModal').classList.remove('show');
+        });
+
+        document.getElementById('writeCloseBtn').addEventListener('click', () => {
+            document.getElementById('writeModal').classList.remove('show');
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            document.getElementById('writeModal').classList.remove('show');
+        });
+
+        document.getElementById('detailModal').addEventListener('click', (e) => {
+            if (e.target.id === 'detailModal') {
+                document.getElementById('detailModal').classList.remove('show');
+            }
+        });
+
+        document.getElementById('writeModal').addEventListener('click', (e) => {
+            if (e.target.id === 'writeModal') {
+                document.getElementById('writeModal').classList.remove('show');
+            }
+        });
+
+        document.getElementById('fileUploadArea').addEventListener('click', () => {
+            document.getElementById('fileInput').click();
+        });
+
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            files.forEach(file => {
+                if (!selectedFiles.find(f => f.name === file.name)) {
+                    selectedFiles.push(file);
+                }
+            });
+            renderFileList();
+        });
+
+        document.getElementById('noticeForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const newNotice = {
+                id: notices.length + 1,
+                type: document.getElementById('noticeType').value,
+                title: document.getElementById('noticeTitle').value,
+                content: document.getElementById('noticeContent').value,
+                author: document.getElementById('noticeAuthor').value,
+                date: new Date().toISOString().split('T')[0],
+                views: 0,
+                isNew: true,
+                attachments: selectedFiles.map(file => ({
+                    name: file.name,
+                    size: formatFileSize(file.size)
+                }))
+            };
+
+            notices.unshift(newNotice);
+            document.getElementById('writeModal').classList.remove('show');
+            renderNotices();
+
+            const message = document.createElement('div');
+            message.className = 'success-message show';
+            message.innerHTML = `
+                <div style="font-size: 48px; margin-bottom: 15px;">✅</div>
+                <div style="font-size: 18px; font-weight: 600; margin-bottom: 10px;">등록 완료!</div>
+                <div style="font-size: 14px; color: #666;">공지사항이 성공적으로 등록되었습니다.</div>
+            `;
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 2000);
+        });
+
+        document.getElementById('passwordCancelBtn').addEventListener('click', () => {
+            document.getElementById('passwordModal').classList.remove('show');
+        });
+
+        document.getElementById('passwordConfirmBtn').addEventListener('click', deleteNotice);
+
+        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                deleteNotice();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>위험성 평가</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .phone-container { width: 375px; height: 812px; background: white; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); overflow: hidden; display: flex; flex-direction: column; }
+        .page-header { display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-bottom: 2px solid #f0f0f0; background: white; }
+        .back-btn { background: none; border: none; font-size: 20px; cursor: pointer; padding: 5px; color: #2196F3; text-decoration: none; }
+        .page-title { font-size: 20px; font-weight: bold; color: #333; flex: 1; }
+        .page-content { flex: 1; padding: 20px; overflow-y: auto; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
+        .form-input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .form-input:focus { outline: none; border-color: #2196F3; }
+        .risk-calculator { background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0; }
+        .risk-row { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
+        .risk-row-label { display: flex; align-items: center; gap: 8px; }
+        .info-icon { 
+            background: #2196F3; 
+            color: white; 
+            width: 20px; 
+            height: 20px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 12px; 
+            cursor: pointer; 
+            font-weight: bold;
+        }
+        .risk-buttons { display: flex; gap: 8px; }
+        .risk-btn { width: 35px; height: 35px; border: 2px solid #ddd; background: white; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.2s; }
+        .risk-btn.selected { background: #2196F3; color: white; border-color: #2196F3; }
+        .risk-result { background: #fff; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; font-weight: bold; font-size: 16px; }
+        
+        /* 팝업 스타일 */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-overlay.active { display: flex; }
+        .popup-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 320px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .popup-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .popup-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .popup-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 4px solid #2196F3;
+        }
+        .popup-item-title {
+            font-weight: bold;
+            color: #2196F3;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .popup-item-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .popup-close-btn {
+            width: 100%;
+            padding: 12px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .submit-btn { width: 100%; background: linear-gradient(135deg, #2196F3, #1976D2); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="page-header">
+            <a href="../index.html" class="back-btn">‹</a>
+            <div class="page-title">위험성 평가</div>
+        </div>
+        
+        <div class="page-content">
+            <form id="risk-form">
+                <div class="form-group">
+                    <label class="form-label">📅 평가일</label>
+                    <input type="date" class="form-input" id="risk-date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">📍 평가 대상</label>
+                    <input type="text" class="form-input" id="risk-target" placeholder="작업/공정명을 입력하세요" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">⚠️ 위험요인</label>
+                    <textarea class="form-input" id="risk-hazard" rows="2" placeholder="위험요인을 구체적으로 입력하세요" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">🛡️ 감소대책</label>
+                    <textarea class="form-input" id="risk-measure" rows="2" placeholder="위험요인에 대한 감소대책을 입력하세요" required></textarea>
+                </div>
+                
+                <div class="risk-calculator">
+                    <div class="risk-row">
+                        <div class="risk-row-label">
+                            <span>빈도</span>
+                            <div class="info-icon" onclick="showPopup('frequency')">?</div>
+                        </div>
+                        <div class="risk-buttons">
+                            <button type="button" class="risk-btn" onclick="selectRisk('frequency', 1, this)">1</button>
+                            <button type="button" class="risk-btn" onclick="selectRisk('frequency', 2, this)">2</button>
+                            <button type="button" class="risk-btn selected" onclick="selectRisk('frequency', 3, this)">3</button>
+                            <button type="button" class="risk-btn" onclick="selectRisk('frequency', 4, this)">4</button>
+                            <button type="button" class="risk-btn" onclick="selectRisk('frequency', 5, this)">5</button>
+                        </div>
+                    </div>
+                    
+                    <div class="risk-row">
+                        <div class="risk-row-label">
+                            <span>강도</span>
+                            <div class="info-icon" onclick="showPopup('severity')">?</div>
+                        </div>
+                        <div class="risk-buttons">
+                            <button type="button" class="risk-btn" onclick="selectRisk('severity', 1, this)">1</button>
+                            <button type="button" class="risk-btn selected" onclick="selectRisk('severity', 2, this)">2</button>
+                            <button type="button" class="risk-btn" onclick="selectRisk('severity', 3, this)">3</button>
+                            <button type="button" class="risk-btn" onclick="selectRisk('severity', 4, this)">4</button>
+                        </div>
+                    </div>
+                    
+                    <div class="risk-result" id="risk-result" style="background: #ffeb3b; color: black;">
+                        중대성: 6점 | 위험등급: 보통 (중기간 내 개선)
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">⚠️ 위험성 평가 제출</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 빈도 팝업 -->
+    <div class="popup-overlay" id="frequency-popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <span style="font-size: 24px;">❄️</span>
+                <div class="popup-title">빈도 설명</div>
+            </div>
+            
+            <div class="popup-item">
+                <div class="popup-item-title">5 - 피해가 발생할 가능성이 매우 높음</div>
+                <div class="popup-item-desc">해당 안전대책이 되어 있지 않고, 표시·표지가 있어도 물리(不備)가 많으며, 안전수칙 작업표준 등도 없음.</div>
+            </div>
+            
+            <div class="popup-item">
+                <div class="popup-item-title">4 - 피해가 발생할 가능성이 높음</div>
+                <div class="popup-item-desc">가능방호물개, 기타 안전장치가 없거나 상당한 물비(不備)가 있고, 비상정지장치, 표시표지는 멘만큼 설치되어 있으며, 안전수칙 작업표준 등은 있지만 치키기 어려운 많은 수위를 해야 함.</div>
+            </div>
+            
+            <div class="popup-item">
+                <div class="popup-item-title">3 - 부주의하면 피해가 발생할 가능성이 있음</div>
+                <div class="popup-item-desc">가능방호물개 또는 안전장치 등은 설치되어 있지만, 가트가 낫거나 간격이 벌어져 있는 등 물비(不備)가 있고, 위험영역 접근, 위험작업의 실패 등을 있지만 안전수칙 작업표준 등은 있지만 일부 준수하기 어려운 많은 수위를 해야 함.</div>
+            </div>
+            
+            <div class="popup-item">
+                <div class="popup-item-title">2 - 피해가 발생할 가능성이 낮음</div>
+                <div class="popup-item-desc">가능방호물개 등으로 보호되어 있고, 안전장치가 설치되어 있으며, 위험영역에 출입이 곤란한 상태이고, 안전 수칙 작업표준 등이 정비되어 있고 준수하기 쉬우나, 피해의 가능성이 남아있음.</div>
+            </div>
+            
+            <div class="popup-item">
+                <div class="popup-item-title">1 - 피해가 발생할 가능성이 없음</div>
+                <div class="popup-item-desc">가능방호물개 등으로 출입서며 있고 안전장치가 설치되어 있으며, 위험영역에 출입이 곤란한 상태 등 전반적으로 안전조치가 잘 되어 있음.</div>
+            </div>
+            
+            <button class="popup-close-btn" onclick="closePopup('frequency')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 강도 팝업 -->
+    <div class="popup-overlay" id="severity-popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <span style="font-size: 24px;">⚡</span>
+                <div class="popup-title">강도 설명</div>
+            </div>
+            
+            <div class="popup-item">
+                <div class="popup-item-title">4 - 사망 또는 영구적 근로불능</div>
+                <div class="popup-item-desc">업무 복귀가 불가능한 상태가 남는 부상 또는 질병.</div>
+            </div>
+            
+            <div class="popup-item">
+                <div class="popup-item-title">3 - 중대한 부상 또는 질병</div>
+                <div class="popup-item-desc">일정 시점에 업무에 복귀(완치) 가능하지만, 휴업을 수반하는 부상 또는 질병.</div>
+            </div>
+            
+            <div class="popup-item">
+                <div class="popup-item-title">2 - 치료가 필요하지만 휴업 없음</div>
+                <div class="popup-item-desc">응급조치 이상의 치료가 필요하지만, 휴업 없이 지속할 수 있는 부상 또는 질병.</div>
+            </div>
+            
+            <div class="popup-item">
+                <div class="popup-item-title">1 - 경미한 부상 또는 질병</div>
+                <div class="popup-item-desc">처치(치료) 후 바로 원래 작업을 수행할 수 있으며, 업무에 전혀 지장이 없음.</div>
+            </div>
+            
+            <button class="popup-close-btn" onclick="closePopup('severity')">닫기</button>
+        </div>
+    </div>
+
+    <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwFZV52nxaHxWvChSZV_ET_ckAQis9s6KaMQ3nE6R02CR04mMxT_IJqxX7Gmmofzxw9bg/exec';
+        let riskValues = { frequency: 3, severity: 2 };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('risk-date').value = today;
+        });
+        
+        function showPopup(type) {
+            const popup = document.getElementById(type + '-popup');
+            popup.classList.add('active');
+        }
+        
+        function closePopup(type) {
+            const popup = document.getElementById(type + '-popup');
+            popup.classList.remove('active');
+        }
+        
+        // 팝업 외부 클릭 시 닫기
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('popup-overlay')) {
+                e.target.classList.remove('active');
+            }
+        });
+        
+        function selectRisk(type, value, btn) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.risk-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            riskValues[type] = value;
+            updateRiskResult();
+        }
+        
+        function updateRiskResult() {
+            const risk = riskValues.frequency * riskValues.severity;
+            const resultDiv = document.getElementById('risk-result');
+            let level, color, text;
+            
+            if (risk >= 15) {
+                level = '매우 높음 (즉시 개선)';
+                color = '#f44336';
+                text = 'white';
+            } else if (risk >= 10) {
+                level = '높음 (단기간 내 개선)';
+                color = '#ff9800';
+                text = 'white';
+            } else if (risk >= 5) {
+                level = '보통 (중기간 내 개선)';
+                color = '#ffeb3b';
+                text = 'black';
+            } else {
+                level = '낮음 (장기간 개선)';
+                color = '#4caf50';
+                text = 'white';
+            }
+            
+            resultDiv.style.background = color;
+            resultDiv.style.color = text;
+            resultDiv.textContent = `중대성: ${risk}점 | 위험등급: ${level}`;
+        }
+        
+        async function sendEmail(type, data) {
+            try {
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type, ...data })
+                });
+                return { success: true };
+            } catch (error) {
+                console.error('Email send error:', error);
+                return { success: false };
+            }
+        }
+        
+        document.getElementById('risk-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('.submit-btn');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = '📧 전송 중...';
+            
+            const data = {
+                type: 'risk',
+                date: document.getElementById('risk-date').value,
+                target: document.getElementById('risk-target').value,
+                hazard: document.getElementById('risk-hazard').value,
+                measure: document.getElementById('risk-measure').value,
+                frequency: riskValues.frequency,
+                severity: riskValues.severity,
+                risk: riskValues.frequency * riskValues.severity,
+                level: document.getElementById('risk-result').textContent
+            };
+            
+            await sendEmail('risk', data);
+            alert('✅ 위험성 평가가 이메일로 전송되었습니다!');
+            btn.disabled = false;
+            btn.textContent = originalText;
+            window.location.href = '../index.html';
+        });
+    </script>
+</body>
+</html>

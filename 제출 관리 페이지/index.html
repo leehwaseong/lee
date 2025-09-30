@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeWork - 통합 안전관리 시스템</title>
+    
+
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
+        }
+        .phone-container { 
+            width: 375px; 
+            height: 812px; 
+            background: white; 
+            border-radius: 25px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+            overflow: hidden; 
+            position: relative; 
+        }
+        .status-bar { 
+            background: #000; 
+            color: white; 
+            padding: 8px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 14px; 
+            font-weight: 600; 
+        }
+        .main-container { 
+            height: calc(100% - 40px); 
+            display: flex; 
+            flex-direction: column; 
+        }
+        .header { 
+            background: linear-gradient(135deg, #2196F3, #1976D2); 
+            color: white; 
+            padding: 20px; 
+            text-align: center; 
+        }
+        .app-title { 
+            font-size: 28px; 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+        }
+        .app-subtitle { 
+            font-size: 14px; 
+            opacity: 0.9; 
+        }
+        .content { 
+            flex: 1; 
+            padding: 25px 20px; 
+            background: #f8f9fa; 
+            overflow-y: auto; 
+        }
+        .feature-group { 
+            margin-bottom: 30px; 
+            background: white; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+        }
+        .group-header { 
+            padding: 15px 20px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .group-reports { 
+            background: linear-gradient(135deg, #2196F3, #1E88E5); 
+            color: white; 
+        }
+        .group-info { 
+            background: linear-gradient(135deg, #4CAF50, #388E3C); 
+            color: white; 
+        }
+        .group-communication { 
+            background: linear-gradient(135deg, #9C27B0, #7B1FA2); 
+            color: white; 
+        }
+        .feature-item { 
+            padding: 18px 20px; 
+            border-bottom: 1px solid #f0f0f0; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            text-decoration: none;
+            color: inherit;
+        }
+        .feature-item:hover { 
+            background: #f8f9fa; 
+            transform: translateX(5px); 
+        }
+        .feature-item:last-child { 
+            border-bottom: none; 
+        }
+        .feature-icon { 
+            font-size: 24px; 
+            width: 40px; 
+            height: 40px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 10px; 
+        }
+        .reports-icon { background: rgba(33, 150, 243, 0.1); }
+        .info-icon { background: rgba(76, 175, 80, 0.1); }
+        .comm-icon { background: rgba(156, 39, 176, 0.1); }
+        .feature-text { flex: 1; }
+        .feature-title { 
+            font-weight: 600; 
+            font-size: 16px; 
+            color: #333; 
+            margin-bottom: 3px; 
+        }
+        .feature-desc { 
+            font-size: 13px; 
+            color: #666; 
+        }
+        .badge { 
+            background: #ff4444; 
+            color: white; 
+            font-size: 11px; 
+            padding: 2px 8px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+        }
+        .new-badge { 
+            background: #4CAF50; 
+            color: white; 
+            font-size: 10px; 
+            padding: 2px 6px; 
+            border-radius: 8px; 
+            font-weight: bold; 
+        }
+        .arrow { 
+            color: #ccc; 
+            font-size: 18px; 
+        }
+        .demo-badge { 
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            background: #4CAF50; 
+            color: white; 
+            padding: 5px 10px; 
+            border-radius: 15px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            z-index: 1000; 
+        }
+        .highlight-feature { 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .success-indicator { 
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            background: #4CAF50; 
+            color: white; 
+            padding: 5px; 
+            border-radius: 50%; 
+            font-size: 12px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="demo-badge">LIVE</div>
+        <div class="status-bar">
+            <span>9:41</span>
+            <span>🔋100%</span>
+        </div>
+        
+        <div class="main-container">
+            <div class="header">
+                <div class="app-title">🏗️ SafeWork</div>
+                <div class="app-subtitle">통합 안전관리 시스템</div>
+            </div>
+            
+            <div class="content">
+                <!-- 작업 보고 그룹 -->
+                <div class="feature-group">
+                    <div class="group-header group-reports">
+                        <span>📝</span>
+                        <span>작업 보고</span>
+                    </div>
+                    <a href="pages/tbm.html" class="feature-item highlight-feature">
+                        <div class="success-indicator">✓</div>
+                        <div class="feature-icon reports-icon">📋</div>
+                        <div class="feature-text">
+                            <div class="feature-title">TBM 보고서</div>
+                            <div class="feature-desc">디지털 서명 + PDF 자동 생성</div>
+                        </div>
+                        <div class="new-badge">PDF</div>
+                        <div class="arrow">›</div>
+                    </a>
+                    <a href="pages/risk.html" class="feature-item">
+                        <div class="feature-icon reports-icon">⚠️</div>
+                        <div class="feature-text">
+                            <div class="feature-title">위험성 평가</div>
+                            <div class="feature-desc">5×4 방식 실시간 계산</div>
+                        </div>
+                        <div class="arrow">›</div>
+                    </a>
+                    <a href="pages/incident.html" class="feature-item">
+                        <div class="feature-icon reports-icon">🚨</div>
+                        <div class="feature-text">
+                            <div class="feature-title">아차사고 신고</div>
+                            <div class="feature-desc">즉시 신고 및 현장 기록</div>
+                        </div>
+                        <div class="arrow">›</div>
+                    </a>
+                </div>
+                
+                <!-- 안전 정보 그룹 -->
+                <div class="feature-group">
+                    <div class="group-header group-info">
+                        <span>📢</span>
+                        <span>안전 정보</span>
+                    </div>
+                    <a href="pages/notice-list.html" class="feature-item">
+                        <div class="feature-icon info-icon">📢</div>
+                        <div class="feature-text">
+                            <div class="feature-title">공지사항</div>
+                            <div class="feature-desc">알림 + 검색 + 파일첨부</div>
+                        </div>
+                        <div class="badge">2</div>
+                        <div class="arrow">›</div>
+                    </a>
+                    <a href="pages/regulation-list.html" class="feature-item">
+                        <div class="feature-icon info-icon">📖</div>
+                        <div class="feature-text">
+                            <div class="feature-title">안전 규정</div>
+                            <div class="feature-desc">9개 카테고리별 규정</div>
+                        </div>
+                        <div class="arrow">›</div>
+                    </a>
+                    <a href="pages/msds-list.html" class="feature-item">
+                        <div class="feature-icon info-icon">🧪</div>
+                        <div class="feature-text">
+                            <div class="feature-title">MSDS 조회</div>
+                            <div class="feature-desc">13개 필드 + PDF 연결</div>
+                        </div>
+                        <div class="arrow">›</div>
+                    </a>
+                </div>
+                
+                <!-- 소통 그룹 -->
+                <div class="feature-group">
+                    <div class="group-header group-communication">
+                        <span>💬</span>
+                        <span>소통</span>
+                    </div>
+                    <a href="pages/opinion.html" class="feature-item">
+                        <div class="feature-icon comm-icon">💭</div>
+                        <div class="feature-text">
+                            <div class="feature-title">의견 제출</div>
+                            <div class="feature-desc">실명/익명 자유 선택</div>
+                        </div>
+                        <div class="arrow">›</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
