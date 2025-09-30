@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>작업 전 안전 점검 시트</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+
+    fieldset {
+      border: none;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  table-layout: fixed; /* ✅ 고정 테이블 구조로 */
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+th {
+  background-color: #e9ecef;
+}
+
+td input[type="text"] {
+  width: 80px; /* ✅ 비고란 줄이기 */
+  max-width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+  font-size: 13px;
+}
+
+
+    .submit-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🛠️ 작업 전 안전 점검 시트</h2>
+
+  <form id="riskForm">
+    <fieldset>
+      <legend><strong>작업자 정보 입력</strong></legend>
+
+      <label for="date">점검일자</label>
+      <input type="date" name="date" required />
+
+      <label for="workerName">이름</label>
+      <input type="text" name="workerName" required />
+
+      <label for="workLocation">작업 장소</label>
+      <input type="text" name="workLocation" required />
+
+      <label for="riskWork">금일 진행 위험작업</label>
+      <textarea name="riskWork" rows="3" required></textarea>
+
+      <label for="riskControl">위험요소 감소대책</label>
+      <textarea name="riskControl" rows="3" required></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend><strong>작업 전 안전 체크리스트</strong></legend>
+
+      <table>
+        <tr>
+          <th>체크 항목</th>
+          <th>예</th>
+          <th>아니오</th>
+          <th>비고</th>
+        </tr>
+        <tr>
+          <td>보호구(헬멧, 안전화 등) 착용</td>
+          <td><input type="radio" name="item1" value="yes" required /></td>
+          <td><input type="radio" name="item1" value="no" /></td>
+          <td><input type="text" name="note1" /></td>
+        </tr>
+        <tr>
+          <td>작업 허가서 수령</td>
+          <td><input type="radio" name="item2" value="yes" required /></td>
+          <td><input type="radio" name="item2" value="no" /></td>
+          <td><input type="text" name="note2" /></td>
+        </tr>
+        <tr>
+          <td>위험요소 사전 확인</td>
+          <td><input type="radio" name="item3" value="yes" required /></td>
+          <td><input type="radio" name="item3" value="no" /></td>
+          <td><input type="text" name="note3" /></td>
+        </tr>
+        <tr>
+          <td>정리정돈 및 청소</td>
+          <td><input type="radio" name="item4" value="yes" required /></td>
+          <td><input type="radio" name="item4" value="no" /></td>
+          <td><input type="text" name="note4" /></td>
+        </tr>
+      </table>
+    </fieldset>
+
+    <button type="submit" class="submit-btn">제출</button>
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("riskForm");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+
+        fetch("https://script.google.com/macros/s/AKfycbzrRoz68L0ZT-ec1ge0sFbObSrmsdQPeNiHezvn6QsEzaU-PAzUfvzkdhoaNRuXAaEb/exec", {
+          method: "POST",
+          body: formData
+        })
+        .then(response => response.text())
+        .then(() => {
+          alert("✅ 제출이 완료되었습니다!");
+          form.reset();
+        })
+        .catch(error => {
+          alert("❌ 오류 발생: " + error.message);
+          console.error("전송 오류:", error);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

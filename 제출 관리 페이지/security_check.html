@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>보안 점검 사진 제출</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; background-color: #f7f7f7; }
+    label { margin-top: 15px; display: block; font-weight: bold; }
+    input, button {
+      width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box;
+    }
+    button {
+      background: #007bff; color: white; font-weight: bold; cursor: pointer; border: none;
+    }
+    button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+
+  <h2>📋 보안 점검 사진 제출</h2>
+
+  <form id="photoForm">
+    <label>점검일자 <input type="date" name="date" required /></label>
+    <label>점검자 이름 <input type="text" name="workerName" required /></label>
+    <label>SITE <input type="text" name="workLocation" required /></label>
+
+    <!-- ✅ 버튼 + 팝업박스 같이 묶기 -->
+<div style="position: relative; display: inline-block; margin-bottom: 16px;">
+  <button type="button" id="toggleBtn" style="
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+  ">
+    반입 금지 물품 보기
+  </button>
+
+ <!-- ✅ 안내 박스: 페이지 정중앙 -->
+<div id="inlinePopup" style="
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 16px;
+  font-size: 14px;
+  z-index: 9999;
+  text-align: left;
+">
+  <strong style="display: block; margin-bottom: 8px; color: #c92a2a;">🔴 반입 금지 물품</strong>
+  <ul style="padding-left: 20px; margin: 0; line-height: 1.6;">
+    <li>USB</li>
+    <li>메모리</li>
+    <li>촬영장비</li>
+    <li>무선 랜카드</li>
+    <li>CD 등 비인가 저장매체</li>
+    <li>네트워크 장비</li>
+  </ul>
+</div>
+
+
+</div>
+
+
+   <fieldset>
+  <legend><strong>보안 점검 체크리스트</strong></legend>
+  <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px;">
+    <thead>
+      <tr style="background-color: #e9ecef;">
+        <th style="padding: 10px; border: 1px solid #ccc;">체크 항목</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">예</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">아니오</th>
+        <th style="padding: 10px; border: 1px solid #ccc;">비고</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 10px;">보안 스티커 부착 여부</td>
+        <td style="border: 1px solid #ccc; text-align: center;">
+          <input type="radio" name="item1" value="yes" required />
+        </td>
+        <td style="border: 1px solid #ccc; text-align: center;">
+          <input type="radio" name="item1" value="no" />
+        </td>
+        <td style="border: 1px solid #ccc;">
+          <input type="text" name="note1" style="width: 100%; padding: 6px; box-sizing: border-box;" />
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 10px;">내방객 MDM 설치 여부</td>
+        <td style="border: 1px solid #ccc; text-align: center;">
+          <input type="radio" name="item2" value="yes" required />
+        </td>
+        <td style="border: 1px solid #ccc; text-align: center;">
+          <input type="radio" name="item2" value="no" />
+        </td>
+        <td style="border: 1px solid #ccc;">
+          <input type="text" name="note2" style="width: 100%; padding: 6px; box-sizing: border-box;" />
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #ccc; padding: 10px;">반입 금지 물품 보유 여부</td>
+        <td style="border: 1px solid #ccc; text-align: center;">
+          <input type="radio" name="item3" value="yes" required />
+        </td>
+        <td style="border: 1px solid #ccc; text-align: center;">
+          <input type="radio" name="item3" value="no" />
+        </td>
+        <td style="border: 1px solid #ccc;">
+          <input type="text" name="note3" style="width: 100%; padding: 6px; box-sizing: border-box;" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>
+
+
+
+    <label>사진 1 <input type="file" id="photo1" accept="image/*" required /></label>
+    <label>사진 2 <input type="file" id="photo2" accept="image/*" required /></label>
+
+    <!-- 이미지 업로드 후 URL 저장용 hidden input -->
+    <input type="hidden" name="photo1_url" id="photo1_url" />
+    <input type="hidden" name="photo2_url" id="photo2_url" />
+
+    <button type="submit">제출하기</button>
+  </form>
+
+<script>
+  emailjs.init("0rUU1apJo2do_xuDp"); // EmailJS Public Key
+  const imgbbApiKey = "b1b2ccdeda8d139d6d2f7c0de475d32e"; // 여기에 ImgBB API 키 삽입
+
+  async function uploadToImgBB(file) {
+    const formData = new FormData();
+    formData.append("image", file);
+    const response = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbApiKey}`, {
+      method: "POST",
+      body: formData
+    });
+    const data = await response.json();
+    return data.data.url;
+  }
+
+  document.getElementById("photoForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const form = e.target;
+
+    try {
+      const photo1File = document.getElementById("photo1").files[0];
+      const photo2File = document.getElementById("photo2").files[0];
+
+      // 업로드 시작 알림
+      alert("📤 사진 업로드 중입니다. 잠시만 기다려주세요...");
+
+      const photo1Url = await uploadToImgBB(photo1File);
+      const photo2Url = await uploadToImgBB(photo2File);
+
+      document.getElementById("photo1_url").value = photo1Url;
+      document.getElementById("photo2_url").value = photo2Url;
+
+      const params = {
+        date: form.date.value,
+        workerName: form.workerName.value,
+        workLocation: form.workLocation.value,
+        item1: form.item1.value,
+        note1: form.note1.value,
+        item2: form.item2.value,
+        note2: form.note2.value,
+        item3: form.item3.value,
+        note3: form.note3.value,
+        photo1_url: photo1Url,
+        photo2_url: photo2Url
+      };
+
+      await emailjs.send("service_4au1v1h", "template_nfl13hy", params);
+      alert("✅ 제출 완료! 메일이 성공적으로 전송되었습니다.");
+      form.reset();
+
+    } catch (error) {
+      alert("❌ 오류 발생: " + error.message);
+      console.error("Error:", error);
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.getElementById("toggleBtn");
+    const popup = document.getElementById("inlinePopup");
+
+    toggleBtn.addEventListener("click", function () {
+      popup.style.display = (popup.style.display === "block") ? "none" : "block";
+    });
+  });
+</script>
+
+
+</body>
+</html>
