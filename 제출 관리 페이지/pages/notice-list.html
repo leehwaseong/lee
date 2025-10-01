@@ -75,8 +75,10 @@
             border-radius: 12px;
             padding: 18px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
         .notice-item:active {
             background: #f8f9fa;
@@ -120,6 +122,10 @@
             background: #ff4444;
             border-radius: 50%;
         }
+        .arrow {
+            color: #ccc;
+            font-size: 20px;
+        }
         .filter-tabs {
             display: flex;
             background: white;
@@ -153,89 +159,7 @@
             font-size: 48px;
             margin-bottom: 15px;
         }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal.show { display: flex; }
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 335px;
-            border-radius: 20px;
-            overflow: hidden;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .modal-header {
-            background: linear-gradient(135deg, #4CAF50, #388E3C);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .modal-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .modal-body {
-            padding: 20px;
-            overflow-y: auto;
-            position: relative;
-        }
-        .detail-section { margin-bottom: 20px; }
-        .detail-label {
-            font-size: 12px;
-            color: #999;
-            margin-bottom: 5px;
-        }
-        .detail-value {
-            font-size: 15px;
-            color: #333;
-            line-height: 1.6;
-        }
-        .attachment-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .attachment-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-        }
-        .attachment-item:active { background: #e0e0e0; }
-        .divider {
-            height: 1px;
-            background: #e0e0e0;
-            margin: 15px 0;
-        }
 
-        /* 데스크톱에서 미리보기용 */
         @media (min-width: 768px) {
             body {
                 display: flex;
@@ -257,9 +181,6 @@
             .notice-item:hover {
                 transform: translateY(-2px);
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            }
-            .attachment-item:hover { 
-                background: #e0e0e0; 
             }
         }
     </style>
@@ -287,164 +208,67 @@
                 <div class="filter-tab" data-filter="etc">기타</div>
             </div>
             
-            <div class="content" id="noticeList"></div>
-        </div>
-    </div>
+            <div class="content" id="noticeList">
+                <!-- 공지사항 아이템들 -->
+                <a href="notices/notice1.html" class="notice-item">
+                    <div class="notice-header">
+                        <span class="notice-badge council">협의체</span>
+                        <div class="notice-title">MSDS 업데이트 완료</div>
+                        <div class="arrow">›</div>
+                    </div>
+                    <div class="notice-meta">
+                        <span>👤 안전관리팀</span>
+                        <span>📅 2025-09-20</span>
+                        <span>👁️ 134</span>
+                        <span class="attachment-icon">📎 1</span>
+                    </div>
+                </a>
 
-    <div class="modal" id="detailModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">공지사항 상세</div>
-                <button class="modal-close" id="detailCloseBtn">×</button>
+                <a href="notices/notice2.html" class="notice-item">
+                    <div class="notice-header">
+                        <div class="new-indicator"></div>
+                        <span class="notice-badge newsletter">소식지</span>
+                        <div class="notice-title">협력사 환경안전보건 소식지 [2025-9월호]</div>
+                        <div class="arrow">›</div>
+                    </div>
+                    <div class="notice-meta">
+                        <span>👤 상생EHS팀</span>
+                        <span>📅 2025-09-01</span>
+                        <span>👁️ 0</span>
+                        <span class="attachment-icon">📎 1</span>
+                    </div>
+                </a>
             </div>
-            <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
 
     <script>
-        const notices = [
-            {
-                id: 1,
-                type: 'council',
-                title: 'MSDS 업데이트 완료',
-                content: '화학물질 안전보건자료(MSDS)가 최신 버전으로 업데이트되었습니다.\n\n업데이트 내역:\n- 신규 화학물질 15종 추가\n- 기존 자료 13종 개정\n\nMSDS 메뉴에서 확인하실 수 있습니다.',
-                author: '안전관리팀',
-                date: '2025-09-20',
-                views: 134,
-                isNew: false,
-                attachments: [
-                    { 
-                        name: '업데이트_목록.pdf', 
-                        size: '320KB',
-                        url: 'https://drive.google.com/file/d/YOUR_FILE_ID/view'
-                    }
-                ]
-            }
-        ];
-
-        let currentFilter = 'all';
-        let searchTerm = '';
-
-        const typeNames = {
-            council: '협의체',
-            newsletter: '소식지',
-            notice: '공지',
-            etc: '기타'
-        };
-
-        function renderNotices() {
-            const container = document.getElementById('noticeList');
-            let filtered = notices.filter(notice => {
-                const matchesFilter = currentFilter === 'all' || notice.type === currentFilter;
-                const matchesSearch = notice.title.toLowerCase().includes(searchTerm) || 
-                                     notice.content.toLowerCase().includes(searchTerm);
-                return matchesFilter && matchesSearch;
-            });
-
-            if (filtered.length === 0) {
-                container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div>검색 결과가 없습니다</div></div>';
-                return;
-            }
-
-            container.innerHTML = filtered.map(notice => `
-                <div class="notice-item" onclick="showDetail(${notice.id})">
-                    <div class="notice-header">
-                        ${notice.isNew ? '<div class="new-indicator"></div>' : ''}
-                        <span class="notice-badge ${notice.type}">${typeNames[notice.type]}</span>
-                        <div class="notice-title">${notice.title}</div>
-                    </div>
-                    <div class="notice-meta">
-                        <span>👤 ${notice.author}</span>
-                        <span>📅 ${notice.date}</span>
-                        <span>👁️ ${notice.views}</span>
-                        ${notice.attachments.length > 0 ? `<span class="attachment-icon">📎 ${notice.attachments.length}</span>` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function showDetail(id) {
-            const notice = notices.find(n => n.id === id);
-            if (!notice) return;
-
-            notice.views++;
-            renderNotices();
-
-            const modalBody = document.getElementById('modalBody');
-            modalBody.innerHTML = `
-                <div class="detail-section">
-                    <div class="detail-label">제목</div>
-                    <div class="detail-value" style="font-weight: 600; font-size: 17px;">${notice.title}</div>
-                </div>
-                <div class="divider"></div>
-                <div class="detail-section">
-                    <div class="detail-label">작성자</div>
-                    <div class="detail-value">${notice.author}</div>
-                </div>
-                <div class="detail-section">
-                    <div class="detail-label">작성일</div>
-                    <div class="detail-value">${notice.date}</div>
-                </div>
-                <div class="detail-section">
-                    <div class="detail-label">조회수</div>
-                    <div class="detail-value">${notice.views}</div>
-                </div>
-                <div class="divider"></div>
-                <div class="detail-section">
-                    <div class="detail-label">내용</div>
-                    <div class="detail-value" style="white-space: pre-line;">${notice.content}</div>
-                </div>
-                ${notice.attachments.length > 0 ? `
-                    <div class="divider"></div>
-                    <div class="detail-section">
-                        <div class="detail-label">첨부파일 (${notice.attachments.length})</div>
-                        <div class="attachment-list">
-                            ${notice.attachments.map(att => `
-                                <a href="${att.url}" target="_blank" class="attachment-item">
-                                    <span>📄</span>
-                                    <div style="flex: 1;">
-                                        <div style="font-size: 14px; font-weight: 600;">${att.name}</div>
-                                        <div style="font-size: 12px; color: #999;">${att.size}</div>
-                                    </div>
-                                    <span>⬇️</span>
-                                </a>
-                            `).join('')}
-                        </div>
-                    </div>
-                ` : ''}
-            `;
-
-            document.getElementById('detailModal').classList.add('show');
-        }
-
-        renderNotices();
-
         document.getElementById('backBtn').addEventListener('click', () => {
             window.history.back();
         });
 
+        // 검색 기능 (필요시 구현)
         document.getElementById('searchInput').addEventListener('input', (e) => {
-            searchTerm = e.target.value.toLowerCase();
-            renderNotices();
+            const searchTerm = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.notice-item');
+            
+            items.forEach(item => {
+                const title = item.querySelector('.notice-title').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         });
 
+        // 필터 기능 (필요시 구현)
         document.querySelectorAll('.filter-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                currentFilter = tab.dataset.filter;
-                renderNotices();
+                // 필터 로직 추가 가능
             });
-        });
-
-        document.getElementById('detailCloseBtn').addEventListener('click', () => {
-            document.getElementById('detailModal').classList.remove('show');
-        });
-
-        document.getElementById('detailModal').addEventListener('click', (e) => {
-            if (e.target.id === 'detailModal') {
-                document.getElementById('detailModal').classList.remove('show');
-            }
         });
     </script>
 </body>
