@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>협력사 환경안전보건 소식지 [2025-9월호]</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: white;
+            line-height: 1.6;
+        }
+        .phone-container { 
+            width: 100%;
+            min-height: 100vh;
+            background: white;
+        }
+        .header { 
+            background: linear-gradient(135deg, #FF9800, #F57C00); 
+            color: white; 
+            padding: 15px 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .back-btn {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            padding: 5px;
+        }
+        .header-title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.3;
+        }
+        .content {
+            padding: 20px;
+        }
+        .badge {
+            display: inline-block;
+            background: #FF9800;
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        .meta {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .article-content {
+            font-size: 15px;
+            color: #333;
+        }
+        .article-content h2 {
+            font-size: 20px;
+            color: #FF9800;
+            margin: 30px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #FF9800;
+        }
+        .article-content h3 {
+            font-size: 18px;
+            color: #333;
+            margin: 25px 0 12px 0;
+            font-weight: 600;
+        }
+        .article-content p {
+            margin-bottom: 15px;
+        }
+        .article-content ul, .article-content ol {
+            margin: 15px 0 15px 20px;
+        }
+        .article-content li {
+            margin-bottom: 8px;
+        }
+        .article-content strong {
+            color: #FF9800;
+            font-weight: 600;
+        }
+        .highlight-box {
+            background: #FFF3E0;
+            border-left: 4px solid #FF9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .info-box {
+            background: #E8F5E9;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #FFEBEE;
+            border-left: 4px solid #F44336;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(to right, #FF9800, transparent);
+            margin: 30px 0;
+        }
+        .attachment-section {
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .attachment-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        .attachment-item:active {
+            background: #e0e0e0;
+        }
+        .attachment-icon {
+            font-size: 32px;
+        }
+        .attachment-info {
+            flex: 1;
+        }
+        .attachment-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .attachment-size {
+            font-size: 12px;
+            color: #999;
+        }
+        .contact-box {
+            background: #E3F2FD;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .contact-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1976D2;
+            margin-bottom: 10px;
+        }
+        .contact-info {
+            font-size: 14px;
+            color: #555;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            .phone-container {
+                max-width: 768px;
+                border-radius: 25px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                overflow: hidden;
+            }
+            .attachment-item:hover {
+                background: #e0e0e0;
+                transform: translateX(5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="header">
+            <button class="back-btn" onclick="history.back()">‹</button>
+            <div class="header-title">협력사 환경안전보건 소식지</div>
+        </div>
+
+        <div class="content">
+            <span class="badge">소식지</span>
+            <h1 class="title">협력사 환경안전보건 소식지 [2025-9월호]</h1>
+            
+            <div class="meta">
+                <span>👤 상생EHS팀</span>
+                <span>📅 2025-09-01</span>
+                <span>👁️ 0</span>
+            </div>
+
+            <div class="article-content">
+                <p>글로벌 제조 인프라총괄 상생EHS팀에서 발행하는 2025년 9월호 협력사 환경안전보건 소식지를 안내드립니다.</p>
+
+                <h2>📋 주요 목차</h2>
+
+                <div class="section-divider"></div>
+
+                <h3>1. 협력사 우수사례</h3>
+                <div class="highlight-box">
+                    <strong>'25년 4차 협력사 우수사례 시상 결과</strong>
+                    <ul>
+                        <li><strong>자체안전관리활동 우수:</strong> 한국하니웰 (DIFF 설비 중량물작업시 보호구 적용)</li>
+                        <li><strong>안전담당자 운영 우수:</strong> TEL Korea (고소작업 현장중심 사전 위험성평가)</li>
+                        <li><strong>기흥 3L 반입구 주차 중 LPG 차량 Gas Leak 제거:</strong> 명일 (SEMES)</li>
+                        <li><strong>Cover JIG 개발을 통한 화학물질 접액사고 예방:</strong> 세메스</li>
+                        <li><strong>설비 배수로 클리닝 자동화 개발을 통한 위험요소 제거:</strong> 테라이엔이</li>
+                        <li><strong>작업중지권 우수 사례:</strong> 에이치씨엠, 한양테크엔서비스, 에스피엠텍, 화성엔지니어링</li>
+                    </ul>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <h3>2. 사고사례 및 시사점</h3>
+                
+                <div class="warning-box">
+                    <strong>[타산지석] 고용노동부 중대재해 사이렌</strong>
+                    <ul>
+                        <li>용접작업 시 화재, 폭발로 인한 중대재해가 지속 발생 중입니다</li>
+                        <li>2025년 1~2분기 화재폭발 사망사고 16건 발생 (전년 동기 대비 12% 증가)</li>
+                        <li>위험물 취급작업 전에는 작업자 대상 위험물질에 대한 정보와 비상조치 교육 필수</li>
+                        <li>현장 작업 시 화재 폭발사고 예방 안전수칙 준수 필요</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>멀티콘센트 탄화 사고사례</strong>
+                    <p>고전력 사용 전기 제품을 멀티탭에 연결하여 부하 발생으로 탄화 사고 발생</p>
+                    <p><strong>Ground Rule 준수 필수사항:</strong></p>
+                    <ol>
+                        <li>정격용량에 맞는 콘센트 사용 (4구중 3구/6구중 4~5구 사용 80%)</li>
+                        <li>멀티탭 다단(문어발식) 사용 금지</li>
+                        <li>멀티탭은 벽면에 부착하여 사용</li>
+                        <li>불량 플러그 사용 금지</li>
+                        <li>케이블을 잡고 탈착 금지</li>
+                        <li>퇴근 전 멀티탭 OFF 및 점검</li>
+                        <li>전선기판 주의(플러그-콘센트 밀림)</li>
+                        <li>파손 콘센트 사용 금지</li>
+                    </ol>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <h3>3. 필수준수 / 요청사항</h3>
+                
+                <div class="info-box">
+                    <strong>중대재해예방 안전강화 정책 준수 (One Strike Out)</strong>
+                    <p><strong>5대 핵심 원칙 (Cardinal-Rule):</strong></p>
+                    <ol>
+                        <li>화학물질 취급 작업 시 보호구를 반드시 착용</li>
+                        <li>고소 작업 시 안전 고리를 항상 체결하고, 개구부는 4면 펜스를 반드시 설치</li>
+                        <li>밀폐 작업 시 반드시 호흡기 보호구를 착용, 가스 농도를 측정</li>
+                        <li>설비/중장비 안전 장치를 절대 임의 해제 금지</li>
+                        <li>전기 활선 작업 시 절연 보호구를 반드시 착용</li>
+                    </ol>
+                </div>
+
+                <p><strong>복귀 프로그램</strong></p>
+                <ul>
+                    <li>출입 제한 종료 후 특별교육 프로그램 신청 및 수료 필요</li>
+                    <li>위반자: 안전담당자 기본 8Hr + 위험성 평가 16Hr + 직무안전인증(위반항목) α</li>
+                    <li>안전담당자: 위반 작업간 안전담당자 역할과 업무 의무 위반 시 자격취소 후 프로그램 수료 필요</li>
+                </ul>
+
+                <p><strong>협력사 환경안전 포털 내 하도사 현황 입력 요청</strong></p>
+                <ul>
+                    <li>접속 경로: 협력사환경안전포털 → 업체정보 → 하도사 정보 업데이트 (9/10일 시스템 오픈 예정)</li>
+                    <li>하도사 미운영인 경우에도 "No" 입력 필수</li>
+                </ul>
+
+                <p><strong>1년 미만 미숙련 작업자 주작업 금지</strong></p>
+                <ul>
+                    <li>2020년 산재 사망사고 882건중 50%는 6개월 미만 저경력자에서 발생</li>
+                    <li>최소 1년 이상의 업무 경력자가 주작업을 진행하도록 계약 요건에 반영</li>
+                    <li>1년 미만 경력의 인력은 공구 전달, 자재 운반 등의 보조 작업만 수행 가능</li>
+                </ul>
+
+                <div class="section-divider"></div>
+
+                <h3>4. 변경점 (업무기준/규정)</h3>
+                
+                <p><strong>'25년 8월 규정변경 사례</strong></p>
+                <ol>
+                    <li><strong>(규정) 위험작업 안전관리 규정 개정</strong>
+                        <ul>
+                            <li>기상상태별 옥외 위험작업 금지기준 고용노동부 가이드와 일치화 반영</li>
+                            <li>표준계약서 기준 개정 사항 적용</li>
+                        </ul>
+                    </li>
+                    <li><strong>(규칙) 도급에 따른 산업재해 예방조치 업무 관리규칙 개정</strong>
+                        <ul>
+                            <li>안전보건교육 실시 확인 대상 변경 및 VOC 수렴하여 양식 개정</li>
+                            <li>협력사에서는 작업 전 특별안전보건교육을 실시하고, 협의체 또는 적격수준평가 등을 통하여 증빙자료를 제출</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="highlight-box">
+                    <strong>계약 EHS 평가 기준 변경</strong>
+                    <ul>
+                        <li>EHS 평가 Pass 기준: 25.9월부터 75점으로 상향 (기존 70점)</li>
+                        <li>25.9월 이후 EHS평가 75점 미만 협력사는 DS부문 계약 참여 제한</li>
+                        <li>EHS 평가 Catch-up 설명회 (9/24)</li>
+                    </ul>
+                </div>
+
+                <p><strong>협력사 직무안전인증교육 변경사항</strong></p>
+                <ul>
+                    <li><strong>중량물/양중작업 관련 교육과정 통합 ['25/10/1~]</strong>
+                        <ul>
+                            <li>교육과정: 중량물/양중작업 통합과정(4Hr)</li>
+                            <li>교육대상: 중량물/양중작업 팀리더, 신호수, 유도원, 지게차기사</li>
+                            <li>인증기한: 1년</li>
+                        </ul>
+                    </li>
+                    <li><strong>화학물질취급작업 교육시간 및 대상 변경 ['25/10/1~]</strong>
+                        <ul>
+                            <li>교육시간: 8시간 → 4시간</li>
+                            <li>교육대상: 호흡기보호구 착용작업자 (B급 가스작업 제외)</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="section-divider"></div>
+
+                <h3>5. 안내사항</h3>
+
+                <p><strong>풍수해 예방 가이드</strong></p>
+                <ul>
+                    <li>위험성평가를 통한 현장 유해위험요인 수시 파악/개선조치 실시</li>
+                    <li>작업 전 모든 작업자 참여 하 T.B.M 및 안전교육 실시</li>
+                    <li>집중호우 및 위험상황이 예상되는 즉시 작업중지</li>
+                    <li>강수량 10mm/hr 이상 시 옥외 위험작업 금지</li>
+                </ul>
+
+                <p><strong>온열질환 예방 가이드</strong></p>
+                <ul>
+                    <li>온열질환 의심자 발생시 사내 소방대 신고</li>
+                    <li>TBM시 건강상태 확인 및 작업 중 적절한 휴게시간 제공</li>
+                    <li>작업위치 체감온도 기준 실내/외 구분없이 체감온도 별 휴식시간 준수</li>
+                </ul>
+
+                <p><strong>DS부문 사업장 내 디젤 차량 출입 불가</strong></p>
+                <ul>
+                    <li>26.1월부터 DS부문 사업장 내 디젤 차량 출입 불가</li>
+                    <li>접수처: es718.hwang@samsung.com</li>
+                    <li>접수 기간: 10/31(금)까지</li>
+                </ul>
+
+                <p><strong>25년 하반기 협력회사 안전경영대회</strong></p>
+                <ul>
+                    <li>공모기간: 25.8.27(수) ~ 9.26(금)</li>
+                    <li>공모대상: 삼성전자 DS부문 전 협력회사</li>
+                    <li>공모분야: 위험성평가 실시/운영 우수사례</li>
+                </ul>
+
+                <p><strong>보호구 특화 교육 운영</strong></p>
+                <ul>
+                    <li>3M사와 함께하는 현장 안전 특강</li>
+                    <li>교육일시: 9/9일 10-12시(기흥아카데미), 9/25일 10-12시(평택아카데미)</li>
+                    <li>추천대상: 화학물질 취급 작업 및 호흡보호구 착용 작업사</li>
+                </ul>
+            </div>
+
+            <div class="contact-box">
+                <div class="contact-title">문의처</div>
+                <div class="contact-info">
+                    상생EHS팀<br>
+                    ks72.lim@samsung.com<br>
+                    031-6192-6847
+                </div>
+            </div>
+
+            <div class="attachment-section">
+                <div class="attachment-title">첨부파일</div>
+                <a href="#" class="attachment-item">
+                    <div class="attachment-icon">📄</div>
+                    <div class="attachment-info">
+                        <div class="attachment-name">협력사_환경안전보건_소식지_2025년_9월호.pdf</div>
+                        <div class="attachment-size">약 3.5MB</div>
+                    </div>
+                    <div>⬇️</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

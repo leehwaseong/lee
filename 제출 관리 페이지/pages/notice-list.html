@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeWork - 공지사항</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .phone-container { 
+            width: 100%;
+            min-height: 100vh;
+            background: white;
+            position: relative;
+        }
+        .main-container { 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+        }
+        .header { 
+            background: linear-gradient(135deg, #4CAF50, #388E3C); 
+            color: white; 
+            padding: 15px 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+        }
+        .back-btn {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            padding: 5px;
+        }
+        .header-title {
+            flex: 1;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .search-container {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 20px;
+            padding: 10px 15px;
+            gap: 10px;
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 15px;
+        }
+        .search-icon { color: #999; }
+        .content { 
+            flex: 1; 
+            background: #f8f9fa; 
+            overflow-y: auto; 
+        }
+        .notice-item {
+            background: white;
+            margin: 10px 15px;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .notice-item:active {
+            background: #f8f9fa;
+        }
+        .notice-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .notice-badge {
+            color: white;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .notice-badge.council { background: #9C27B0; }
+        .notice-badge.newsletter { background: #FF9800; }
+        .notice-badge.notice { background: #4CAF50; }
+        .notice-badge.etc { background: #757575; }
+        .notice-title {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.4;
+        }
+        .notice-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            color: #999;
+            margin-top: 8px;
+        }
+        .attachment-icon { color: #4CAF50; }
+        .new-indicator {
+            width: 8px;
+            height: 8px;
+            background: #ff4444;
+            border-radius: 50%;
+        }
+        .arrow {
+            color: #ccc;
+            font-size: 20px;
+        }
+        .filter-tabs {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 15px;
+            overflow-x: auto;
+        }
+        .filter-tab {
+            flex: 1;
+            min-width: 60px;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #999;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .filter-tab.active {
+            color: #4CAF50;
+            border-bottom-color: #4CAF50;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            .phone-container {
+                width: 375px;
+                min-height: 812px;
+                border-radius: 25px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                overflow: hidden;
+            }
+            .main-container {
+                min-height: 812px;
+            }
+            .notice-item:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="main-container">
+            <div class="header">
+                <button class="back-btn" id="backBtn">‹</button>
+                <div class="header-title">📢 공지사항</div>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="공지사항 검색...">
+                </div>
+            </div>
+
+            <div class="filter-tabs">
+                <div class="filter-tab active" data-filter="all">전체</div>
+                <div class="filter-tab" data-filter="council">협의체</div>
+                <div class="filter-tab" data-filter="newsletter">소식지</div>
+                <div class="filter-tab" data-filter="notice">공지</div>
+                <div class="filter-tab" data-filter="etc">기타</div>
+            </div>
+            
+            <div class="content" id="noticeList">
+                <!-- 공지사항 아이템들 -->
+                <a href="notices/notice1.html" class="notice-item">
+                    <div class="notice-header">
+                        <span class="notice-badge council">협의체</span>
+                        <div class="notice-title">MSDS 업데이트 완료</div>
+                        <div class="arrow">›</div>
+                    </div>
+                    <div class="notice-meta">
+                        <span>👤 안전관리팀</span>
+                        <span>📅 2025-09-20</span>
+                        <span>👁️ 134</span>
+                        <span class="attachment-icon">📎 1</span>
+                    </div>
+                </a>
+
+                <a href="notices/notice2.html" class="notice-item">
+                    <div class="notice-header">
+                        <div class="new-indicator"></div>
+                        <span class="notice-badge newsletter">소식지</span>
+                        <div class="notice-title">협력사 환경안전보건 소식지 [2025-9월호]</div>
+                        <div class="arrow">›</div>
+                    </div>
+                    <div class="notice-meta">
+                        <span>👤 상생EHS팀</span>
+                        <span>📅 2025-09-01</span>
+                        <span>👁️ 0</span>
+                        <span class="attachment-icon">📎 1</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.history.back();
+        });
+
+        // 검색 기능 (필요시 구현)
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.notice-item');
+            
+            items.forEach(item => {
+                const title = item.querySelector('.notice-title').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // 필터 기능 (필요시 구현)
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                // 필터 로직 추가 가능
+            });
+        });
+    </script>
+</body>
+</html>
