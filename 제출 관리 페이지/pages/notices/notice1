@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025년 하반기 정기교육 수강 안내</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .notice-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .notice-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+        }
+
+        .notice-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .notice-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .notice-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            opacity: 0.95;
+            flex-wrap: wrap;
+        }
+
+        .notice-content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .numbered-list {
+            list-style: none;
+            counter-reset: item;
+            padding: 0;
+        }
+
+        .numbered-list li {
+            counter-increment: item;
+            padding: 12px 0 12px 35px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .numbered-list li:before {
+            content: counter(item) ".";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .info-box {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .important-box {
+            background: #ffe6e6;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .highlight {
+            background: linear-gradient(transparent 60%, #fff59d 60%);
+            font-weight: 600;
+            padding: 2px 4px;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .notice-header {
+                padding: 30px 20px;
+            }
+
+            .notice-title {
+                font-size: 22px;
+            }
+
+            .notice-content {
+                padding: 25px 20px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="notice-container">
+            <div class="notice-header">
+                <div class="notice-badge">📚 교육</div>
+                <div class="notice-title">2025년 하반기 정기교육 수강 안내</div>
+                <div class="notice-meta">
+                    <span>👤 상생EHS팀</span>
+                    <span>📅 2025-10-28</span>
+                    <span>👁️ 조회수 0</span>
+                </div>
+            </div>
+
+            <div class="notice-content">
+                
+                <!-- 수료 안내 -->
+                <div class="section">
+                    <div class="section-title">✅ 수료 안내</div>
+                    <div class="info-box">
+                        <ul class="numbered-list">
+                            <li><strong>차시별 평가 과정</strong> : 차시별로 수강 후 차시별로 평가 응시</li>
+                            <li><strong>최종 평가 과정</strong> : 모든 차시 수강 후 최종평가 응시</li>
+                            <li><strong>평가 없는 과정</strong> : 진도율 100%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PC 권장사양 및 브라우저 안내 -->
+                <div class="section">
+                    <div class="section-title">💻 PC 권장사양 및 브라우저 안내</div>
+                    <div class="warning-box">
+                        <ul class="numbered-list">
+                            <li><strong>Windows 10 이상</strong><br>
+                            <small>(Windows 10 이하 또는 Windows VISTA는 학습영상 재생 및 진도율 반영이 정상적이지 않을 수 있습니다.)</small></li>
+                            <li><strong>Internet Explorer 지원 불가</strong>로 <span class="highlight">구글 크롬(권장), 마이크로소프트 엣지, 네이버웨일</span> 등과 같은 크롬엔진 브라우저 이용을 권장합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 수강생 공지 -->
+                <div class="section">
+                    <div class="section-title">🔔 수강생 공지</div>
+                    <div class="important-box">
+                        <ul class="numbered-list">
+                            <li><strong>개강 당일</strong> 수강생에게 <span class="highlight">ID와 비밀번호가 개인 휴대폰 알림톡</span>으로 발송됩니다.</li>
+                            <li>학습자 정보 업데이트를 위해 <span class="highlight">입과 시마다 비밀번호가 초기화</span>됩니다.</li>
+                            <li>메일 내 첨부파일 <strong>&lt;수강안내문&gt;</strong> 참고하시어, 수강생에게 개강 전 필히 안내 바랍니다.</li>
+                            <li>수강 중 <span class="highlight">진도 저조자에게는 진도 저조 알림톡</span>이 발송되어 수강을 독려합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 수강 가이드 다운로드 -->
+                <div class="download-section">
+                    <h3 style="margin-bottom: 10px;">📄 상세 수강 가이드</h3>
+                    <p style="opacity: 0.95; margin-bottom: 5px;">자세한 수강 방법은 아래 가이드 문서를 확인하세요.</p>
+                    
+                    <!-- 여기에 Google Drive 링크를 넣으세요 -->
+                    <a href="https://drive.google.com/file/d/1Aq7f0GpV71pKWOMDELssohjSce1xE_Gd/view?usp=sharing" class="download-btn" target="_blank">
+                        📥 수강 가이드 다운로드
+                    </a>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="../index.html" class="back-btn">← 목록으로 돌아가기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
