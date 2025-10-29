@@ -2,50 +2,77 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>근로자 배포용 · 2025년 10월 안전보건 협의체 회의 자료(통합본)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1e3c72">
+<title>근로자 배포용 · 2025년 10월 안전보건 협의체 회의 자료(통합본, 모바일 최적화)</title>
 <style>
 :root{--b1:#1e3c72;--b2:#2a5298;--ok:#4caf50;--warn:#ff9800;--danger:#f44336;--bg:#f8f9fa;--ink:#111827;--muted:#6b7280;--hl:#fff59d}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:"Malgun Gothic",system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.75}
-.container{max-width:1100px;margin:0 auto}
-header{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.2)}
-.header-inner{padding:18px 16px}
-.h-title{font-weight:800;font-size:1.25rem}
-.h-sub{opacity:.95;font-size:.95rem;margin-top:4px}
-.btns{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap}
-.btn{appearance:none;border:1px solid #d1d5db;background:#fff;color:#111;padding:.5rem .8rem;border-radius:10px;font-weight:700;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 12px}
+header{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.2);padding-top:env(safe-area-inset-top)}
+.header-inner{padding:14px 8px}
+.h-title{font-weight:800;font-size:1.1rem;line-height:1.3}
+.h-sub{opacity:.95;font-size:.9rem;margin-top:6px}
+.btns{display:flex;gap:.5rem;margin-top:.6rem;flex-wrap:wrap}
+.btn{appearance:none;border:1px solid #d1d5db;background:#fff;color:#111;padding:.6rem .9rem;border-radius:10px;font-weight:700;text-decoration:none;line-height:1;flex:1 1 auto;text-align:center}
 .btn.primary{border-color:transparent;background:linear-gradient(135deg,var(--b1),var(--b2));color:#fff}
-main{padding:22px 16px;background:#fff}
-.section{background:var(--bg);border-radius:14px;padding:20px;margin:0 0 22px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.section>h2{margin:0 0 12px;border-bottom:3px solid var(--b2);padding-bottom:8px;color:var(--b1);font-size:1.15rem}
-.sub{margin:18px 0 10px;border-left:4px solid var(--b2);padding-left:8px;font-weight:800;color:var(--b2)}
-.card{background:#fff;border-left:4px solid var(--ok);border-radius:10px;padding:14px;margin:10px 0}
+main{padding:18px 0;background:#fff}
+.section{background:var(--bg);border-radius:14px;padding:16px;margin:0 0 18px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.section>h2{margin:0 0 10px;border-bottom:3px solid var(--b2);padding-bottom:8px;color:var(--b1);font-size:1.05rem}
+.sub{margin:14px 0 10px;border-left:4px solid var(--b2);padding-left:8px;font-weight:800;color:var(--b2)}
+.card{background:#fff;border-left:4px solid var(--ok);border-radius:10px;padding:12px;margin:10px 0}
 .card.warn{border-left-color:var(--warn);background:#fff8ec}
 .card.danger{border-left-color:var(--danger);background:#ffedef}
 .small{color:var(--muted);font-size:.9rem}
 .highlight{background:var(--hl);padding:0 6px;border-radius:4px;font-weight:800}
-.list-tight{margin-left:1.2rem;padding-left:0}
-.list-tight li{margin:.3rem 0;line-height:1.6}
-.kv{display:grid;grid-template-columns:160px 1fr;gap:8px 14px}
+.list-tight{margin-left:1rem;padding-left:0}
+.list-tight li{margin:.25rem 0;line-height:1.6}
+.kv{display:grid;grid-template-columns:140px 1fr;gap:6px 10px}
 .grid{display:grid;gap:10px}
-.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.cols-2{grid-template-columns:1fr}
 .table-wrap{overflow-x:auto;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
 table{border-collapse:collapse;width:100%;min-width:720px}
-caption{text-align:left;padding:.75rem 1rem;font-weight:800;color:#374151}
-th,td{padding:.7rem 1rem;border-bottom:1px solid #e5e7eb;vertical-align:top}
+caption{text-align:left;padding:.6rem .8rem;font-weight:800;color:#374151}
+th,td{padding:.6rem .8rem;border-bottom:1px solid #e5e7eb;vertical-align:top}
 thead th{position:sticky;top:0;background:var(--b2);color:#fff}
 tbody tr:hover{background:#fafafa}
-.check{padding:.6rem .7rem;background:#f5f5f5;border-left:4px solid var(--ok);border-radius:8px;margin:.3rem 0}
+.check{padding:.55rem .6rem;background:#f5f5f5;border-left:4px solid var(--ok);border-radius:8px;margin:.3rem 0}
 .note{font-size:.9rem;color:#374151}
 #toc ol{list-style:none;padding-left:0;margin:0}
 #toc li{margin:.35rem 0}
 #toc li::before{content:"▶ ";color:var(--b2);font-weight:bold}
 #toc li a{text-decoration:none;color:var(--ink)}
 #toc li a:hover{text-decoration:underline;color:var(--b2)}
+
+/* --- 모바일 최적화 --- */
+@media (max-width:600px){
+  .container{padding:0 10px}
+  .h-title{font-size:1.05rem}
+  .h-sub{font-size:.85rem}
+  .btns{gap:.4rem}
+  .btn{padding:.7rem .8rem;font-size:.95rem}
+  .section{padding:14px}
+  .section>h2{font-size:1rem}
+  .kv{grid-template-columns:1fr}
+  .cols-2{grid-template-columns:1fr}
+  .card{padding:12px}
+  /* 표를 카드형으로 스택(접근성 강화) */
+  .table-wrap{border:none}
+  table.stackable{min-width:unset;border-collapse:separate;border-spacing:0 10px}
+  table.stackable thead{display:none}
+  table.stackable tbody{display:block}
+  table.stackable tr{display:block;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:8px}
+  table.stackable td{display:flex;border-bottom:0;padding:.45rem .6rem}
+  table.stackable td::before{content:attr(data-label);flex:0 0 42%;max-width:42%;color:#6b7280;font-weight:700;padding-right:8px}
+}
+
 @media(min-width:768px){body{background:linear-gradient(135deg,#667eea,#764ba2)}.container{margin:24px auto;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.28)}header{position:sticky}}
 @media print{header{position:static;box-shadow:none}.btns{display:none}main{padding:0}.section{box-shadow:none;background:#fff}a[href^="tel:"]::after{content:" (전화)";color:#555}}
+
+/* 길게 늘어나는 링크/텍스트 줄바꿈 */
+a{word-break:break-word}
 </style>
 </head>
 <body>
@@ -55,7 +82,7 @@ tbody tr:hover{background:#fafafa}
       <div class="h-title">📋 근로자 배포용 · 2025년 10월 안전보건 협의체 회의</div>
       <div class="h-sub">회의일자: <time datetime="2025-10-28">2025년 10월 28일</time> · 한양이엔지㈜</div>
       <div class="btns">
-        <a class="btn" href="#toc">목차로 이동</a>
+        <a class="btn" href="#toc">목차</a>
         <button class="btn" onclick="window.print()">🖨️ 인쇄</button>
         <a class="btn primary" href="#voc">VOC 바로가기</a>
       </div>
@@ -248,7 +275,7 @@ tbody tr:hover{background:#fafafa}
     <section id="eval" class="section" aria-labelledby="eval-title">
       <h2 id="eval-title">🏷️ 하반기 협력사 안전평가(서류 40%)</h2>
       <div class="table-wrap" role="region" aria-label="협력사 안전평가 표">
-        <table>
+        <table class="stackable">
           <caption>평가 체계(요지)</caption>
           <thead>
             <tr>
@@ -257,18 +284,18 @@ tbody tr:hover{background:#fafafa}
           </thead>
           <tbody>
             <tr>
-              <td>안전보건관리체계</td>
-              <td>경영매뉴얼·관리규정·위원회·선임계</td>
-              <td rowspan="3">서류 40% + 현장 60% 합산</td>
-              <td rowspan="3">S ≥95 / A ≥90 / B ≥80 / C ≥70 / D &lt;70</td>
+              <td data-label="구분">안전보건관리체계</td>
+              <td data-label="항목 예시">경영매뉴얼·관리규정·위원회·선임계</td>
+              <td data-label="평가" rowspan="3">서류 40% + 현장 60% 합산</td>
+              <td data-label="등급 기준" rowspan="3">S ≥95 / A ≥90 / B ≥80 / C ≥70 / D &lt;70</td>
             </tr>
             <tr>
-              <td>산업안전보건법 이행</td>
-              <td>비상대응·사고관리·현장점검·위험성평가·PPE·건강검진·교육</td>
+              <td data-label="구분">산업안전보건법 이행</td>
+              <td data-label="항목 예시">비상대응·사고관리·현장점검·위험성평가·PPE·건강검진·교육</td>
             </tr>
             <tr>
-              <td>자율안전보건관리</td>
-              <td>모니터링·측정·분석·평가, 상벌·자율프로그램</td>
+              <td data-label="구분">자율안전보건관리</td>
+              <td data-label="항목 예시">모니터링·측정·분석·평가, 상벌·자율프로그램</td>
             </tr>
           </tbody>
         </table>
@@ -280,15 +307,30 @@ tbody tr:hover{background:#fafafa}
     <section id="voc" class="section" aria-labelledby="voc-title">
       <h2 id="voc-title">💬 협의사항 및 VOC 진행현황</h2>
       <div class="table-wrap">
-        <table>
+        <table class="stackable">
           <caption>최근 협의·조치 요약</caption>
           <thead>
             <tr><th>일자</th><th>회사명</th><th>내용</th><th>조치</th></tr>
           </thead>
           <tbody>
-            <tr><td>2025-08-01</td><td>원탑이엔지</td><td>기흥 NRD-K 일부 구간 보행로 미확보</td><td>조치 완료</td></tr>
-            <tr><td>2025-10-17</td><td>기승이엔지</td><td>NRD-K 반입구 횡단보도 미표기 → 차량도로 이동</td><td>결과 대기</td></tr>
-            <tr><td>2025-10-21</td><td>원탑이엔지</td><td>화성 13L CCSS ROOM 천장 누수</td><td>즉시 조치 완료</td></tr>
+            <tr>
+              <td data-label="일자">2025-08-01</td>
+              <td data-label="회사명">원탑이엔지</td>
+              <td data-label="내용">기흥 NRD-K 일부 구간 보행로 미확보</td>
+              <td data-label="조치">조치 완료</td>
+            </tr>
+            <tr>
+              <td data-label="일자">2025-10-17</td>
+              <td data-label="회사명">기승이엔지</td>
+              <td data-label="내용">NRD-K 반입구 횡단보도 미표기 → 차량도로 이동</td>
+              <td data-label="조치">결과 대기</td>
+            </tr>
+            <tr>
+              <td data-label="일자">2025-10-21</td>
+              <td data-label="회사명">원탑이엔지</td>
+              <td data-label="내용">화성 13L CCSS ROOM 천장 누수</td>
+              <td data-label="조치">즉시 조치 완료</td>
+            </tr>
           </tbody>
         </table>
       </div>
